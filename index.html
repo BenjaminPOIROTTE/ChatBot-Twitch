@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ma page HTML</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+    body {
+      background-color: black;
+      color: white;
+      font-size: 20px;
+    }
+
+    .message {
+      word-wrap: break-word;
+      margin-bottom: 5px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .message img {
+      max-width: 30px;
+      vertical-align: middle;
+    }
+
+    .displayName {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="messages"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const maxMessages = 15; // Maximum number of messages to display
+    let messages = [];
+
+    socket.on('message', (data) => {
+      const { displayName, color, message } = data;
+
+      messages.push({ displayName, color, message }); // Add the new message to the end of the array
+      if (messages.length > maxMessages) {
+        messages.shift(); // Remove the oldest message if the array exceeds the maximum size
+      }
+
+      renderMessages();
+    });
+
+    function renderMessages() {
+      const messageContainer = document.getElementById('messages');
+      messageContainer.innerHTML = ''; // Clear the existing messages
+
+      messages.slice().reverse().forEach((messageData, index) => {
+        const { displayName, color, message } = messageData;
+
+        const messageElement = document.createElement('p');
+        messageElement.classList.add('message');
+        
+        const displayNameElement = document.createElement('span');
+        displayNameElement.classList.add('displayName');
+        displayNameElement.style.color = color;
+        displayNameElement.textContent = `${displayName}: `;
+        
+        messageElement.appendChild(displayNameElement);
+        messageElement.innerHTML += message;
+
+        messageContainer.appendChild(messageElement);
+      });
+    }
+  </script>
+</body>
+</html>
