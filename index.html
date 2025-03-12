@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ma page HTML</title>
+  <title>Chatbot</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     body {
-      background-color: black;
+      background-color: rgb(70, 70, 70);
       color: white;
       font-size: 20px;
     }
@@ -14,7 +14,10 @@
       word-wrap: break-word;
       margin-bottom: 5px;
       font-family: 'Roboto', sans-serif;
-    }
+      background: rgb(46, 46, 46);
+background: linear-gradient(90deg, rgb(73, 73, 73) 0%, rgba(102, 102, 102, 0.267) 33%, rgba(255, 255, 255, 0) 100%);
+      border-radius: 25px;
+          }
 
     .message img {
       max-width: 30px;
@@ -33,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
   <script>
     const socket = io();
-    const maxMessages = 15; // Maximum number of messages to display
+    const maxMessages = 5; // Maximum number of messages to display
     let messages = [];
 
     socket.on('message', (data) => {
@@ -51,7 +54,7 @@
       const messageContainer = document.getElementById('messages');
       messageContainer.innerHTML = ''; // Clear the existing messages
 
-      messages.slice().reverse().forEach((messageData, index) => {
+      messages.slice().forEach((messageData, index) => {
         const { displayName, color, message } = messageData;
 
         const messageElement = document.createElement('p');

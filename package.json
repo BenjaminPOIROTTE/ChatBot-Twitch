@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "tmi.js": "^1.8.5",
+    "twitch-emoji": "^0.2.209"
+  }
+}
